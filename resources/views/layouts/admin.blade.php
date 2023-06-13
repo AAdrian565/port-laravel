@@ -17,8 +17,11 @@
 
     <!-- Custom styles for this template-->
     <link href="/css/admin.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!--summernote-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs5.min.css" />
 
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
 <body id="page-top">
@@ -37,6 +40,14 @@
                 <div class="sidebar-brand-text mx-3">Admin</div>
             </a>
 
+            <li class="nav-item">
+                <div class="nav-link" href="#">
+                    <img src="{{ asset('img') }}/faces/{{ Auth::user()->avatar }}" style="height: 2em; width: auto; font-size: 16px; border-radius: 50%;">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>{{ Auth::user()->name }}</span>
+                </div>
+            </li>
+
             <div class="sidebar-heading">
                 Menu
             </div>
@@ -46,22 +57,49 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="/admin/dashboard/#">
+                <a class="nav-link" href="/admin#">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Pages</span></a>
             </li>
 
-            <!-- Nav Item - Charts -->
+            <!-- Nav Item - Experience -->
             <li class="nav-item">
-                <a class="nav-link" href="/admin/message">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Message</span></a>
+                <a class="nav-link" href="/admin/experience/#">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Experience</span></a>
+            </li>
+
+            <!-- Nav Item - Education -->
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/education/#">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Education</span></a>
+            </li>
+
+            <!-- Nav Item - skill -->
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/skill/#">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>skill</span></a>
+            </li>
+
+            <!-- Nav Item - Profile -->
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/profile/#">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Profile</span></a>
+            </li>
+
+            <!-- Nav Item - pagesetting -->
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/pagesetting/#">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>page setting</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
-                document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
+                <a class="nav-link" href="{{ url('auth/logout') }}">
+                    {{ __('Logout') }}
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
@@ -71,8 +109,22 @@
             <hr class="sidebar-divider d-none d-md-block">
 
         </ul>
-        <div id="content-wrapper" class="d-flex flex-column mt-4">
-            @yield('content')
+        <div id="content-wrapper" class="d-flex flex-column m-5">
+            <div id="content">
+                @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $item)
+                        <li>{{$item}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+                @if (Session::has('success'))
+                <div class="alert alert-success">{{Session::get('success')}}</div>
+                @endif
+                @yield('content')
+            </div>
         </div>
         <!-- Footer -->
         <!-- End of Footer -->
@@ -121,6 +173,22 @@
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+    <!--summernote-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs5.min.js"></script>
+    <div id="summernote"></div>
+    <script>
+        $(document).ready(function() {
+            $('.summernote').summernote({
+                height: 100,
+            });
+        });
+    </script>
+</body>
+
+</html>
 </body>
 
 </html>
